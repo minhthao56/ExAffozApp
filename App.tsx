@@ -24,20 +24,26 @@ const App = () => {
    
    try {
      const resutl =await WifiModule.StartScanWifi();
-     const ex = await WifiModule.createCalendarEvent("Thao")
      console.log(resutl);
-     console.log(ex);
-     
-     
    } catch (error) {
      console.log(error);
      
    }
-
-
-
     console.log('hanldScan');
   };
+
+
+  const hanldConnectWifi = async(): Promise<void>=>{
+    
+    try {
+      const ConnectWifi =await WifiModule.ConnectWifi();
+      console.log("ConnectWifi", ConnectWifi);
+    } catch (error) {
+      console.log("errorConnect",error);
+      
+    }
+     console.log('hanldConnectWifi');
+  }
 
   const permissionsAndroid = async () => {
     try {
@@ -78,6 +84,8 @@ const App = () => {
     }
   };
 
+
+
   useEffect(()=>{
     permissionsAndroid();
   },[])
@@ -87,6 +95,7 @@ const App = () => {
       <StatusBar />
       <SafeAreaView>
         <Button title="Scan" onPress={hanldScan} />
+        <Button title="Connect Wifi" onPress={hanldConnectWifi} />
       </SafeAreaView>
     </>
   );

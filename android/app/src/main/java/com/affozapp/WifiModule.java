@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.widget.Toast;
 
@@ -123,6 +124,30 @@ public class WifiModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public  void  ShowText(String content, int duration){
         Toast.makeText(getReactApplicationContext(), content, duration).show();
+    }
+
+    @ReactMethod
+    public void ConnectWifi (Promise promise){
+        String networkSSID = "Huynh Thi Hue";
+        String networkPass = "12345678";
+
+        try {
+            WifiConfiguration wifiConfig = new WifiConfiguration();
+            wifiConfig.SSID = "\"" + networkSSID + "\"";
+            wifiConfig.preSharedKey = "\"" + networkPass + "\"";
+            int netId = wifiManager.addNetwork(wifiConfig);
+            wifiManager.disconnect();
+            wifiManager.enableNetwork(netId, true);
+            wifiManager.reconnect();
+            promise.resolve(true);
+        }catch (Exception e){
+            promise.reject(e);
+
+
+
+        }
+
+
     }
 
 }
