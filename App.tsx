@@ -20,16 +20,15 @@ import {
 const App = () => {
   const {WifiModule} = NativeModules;
 
-  const hanldScan = async (): Promise<void> => {
+  const handleScanWifi = async (): Promise<void> => {
    
    try {
      const resutl =await WifiModule.StartScanWifi();
      console.log(resutl);
    } catch (error) {
      console.log(error);
-     
    }
-    console.log('hanldScan');
+    console.log('handleScanWifi');
   };
 
 
@@ -59,7 +58,7 @@ const App = () => {
       );
 
       if (grantedFineLoction === PermissionsAndroid.RESULTS.GRANTED) {
-        WifiModule.ShowText('FINE_LOCATION', WifiModule.LONG_LENGTH);
+        // WifiModule.ShowText('FINE_LOCATION', WifiModule.LONG_LENGTH);
       } else {
         WifiModule.ShowText('ERROR FINE_LOCATION', WifiModule.LONG_LENGTH);
       }
@@ -75,7 +74,7 @@ const App = () => {
         },
       );
       if (grantedCoarseLocation === PermissionsAndroid.RESULTS.GRANTED) {
-        WifiModule.ShowText('COARSE_LOCATION', WifiModule.LONG_LENGTH);
+        // WifiModule.ShowText('COARSE_LOCATION', WifiModule.LONG_LENGTH);
       } else {
         WifiModule.ShowText('ERROR COARSE_LOCATION', WifiModule.LONG_LENGTH);
       }
@@ -94,7 +93,7 @@ const App = () => {
     <>
       <StatusBar />
       <SafeAreaView>
-        <Button title="Scan" onPress={hanldScan} />
+        <Button title="Scan" onPress={handleScanWifi} />
         <Button title="Connect Wifi" onPress={hanldConnectWifi} />
       </SafeAreaView>
     </>
