@@ -127,10 +127,7 @@ public class WifiModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void ConnectWifi (Promise promise){
-        String networkSSID = "Huynh Thi Hue";
-        String networkPass = "12345678";
-
+    public void ConnectWifiWAP (String networkSSID,String networkPass, Promise promise){
         try {
             WifiConfiguration wifiConfig = new WifiConfiguration();
             wifiConfig.SSID = "\"" + networkSSID + "\"";
@@ -142,12 +139,39 @@ public class WifiModule extends ReactContextBaseJavaModule {
             promise.resolve(true);
         }catch (Exception e){
             promise.reject(e);
-
-
-
         }
-
-
     }
-
+    @ReactMethod
+    public void ConnectWifiWEP (String networkSSID,String networkPass, Promise promise){
+        try {
+            WifiConfiguration wifiConfig = new WifiConfiguration();
+            wifiConfig.SSID = "\"" + networkSSID + "\"";
+            wifiConfig.wepKeys[0] = "\"" + networkPass + "\"";
+            wifiConfig.wepTxKeyIndex = 0;
+            wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+            wifiConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+            int netId = wifiManager.addNetwork(wifiConfig);
+            wifiManager.disconnect();
+            wifiManager.enableNetwork(netId, true);
+            wifiManager.reconnect();
+            promise.resolve(true);
+        }catch (Exception e){
+            promise.reject(e);
+        }
+    }
+    @ReactMethod
+    public void ConnectWifiPublic (String networkSSID,String networkPass, Promise promise){
+        try {
+            WifiConfiguration wifiConfig = new WifiConfiguration();
+            wifiConfig.SSID = "\"" + networkSSID + "\"";
+            wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+            int netId = wifiManager.addNetwork(wifiConfig);
+            wifiManager.disconnect();
+            wifiManager.enableNetwork(netId, true);
+            wifiManager.reconnect();
+            promise.resolve(true);
+        }catch (Exception e){
+            promise.reject(e);
+        }
+    }
 }

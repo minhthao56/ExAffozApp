@@ -7,7 +7,7 @@
  *
  * @format
  */
-
+import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
 import {
   SafeAreaView,
@@ -35,7 +35,7 @@ const App = () => {
   const hanldConnectWifi = async(): Promise<void>=>{
     
     try {
-      const ConnectWifi =await WifiModule.ConnectWifi();
+      const ConnectWifi =await WifiModule.ConnectWifiWAP();
       console.log("ConnectWifi", ConnectWifi);
     } catch (error) {
       console.log("errorConnect",error);
@@ -83,12 +83,9 @@ const App = () => {
     }
   };
 
-
-
   useEffect(()=>{
     permissionsAndroid();
   },[])
-
   return (
     <>
       <StatusBar />
